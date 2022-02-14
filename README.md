@@ -12,12 +12,7 @@ This project is done to create a dynamic navigation bar for a landing page fwd w
 - [Table of contents](#table-of-contents)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Development](#development)
-- [Contribute](#contribute)
-  - [Sponsor](#sponsor)
-  - [Adding new features or fixing bugs](#adding-new-features-or-fixing-bugs)
-- [License](#license)
-- [Footer](#footer)
+- [Dependencies](#dependencies)
 
 # Usage
 
