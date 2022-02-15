@@ -27,6 +27,9 @@ const navBarList = document.querySelector('#navbar__list');
 // window height to get active section 
 const height = window.innerHeight;
 
+let activeSection = document.querySelector('.your-active-class');
+
+
 /**
  * End Global Variables
  * Start Helper Functions
@@ -58,7 +61,6 @@ const appendNavigation = function (sectionArr, navLi){
 
 // Add class 'active' to section when near top of viewport
 const sectionIsActive = function(){
-    let activeSection = document.querySelector('.your-active-class');
     // loop through sections list to detect 
     sections.forEach(function(section){
         // remove existing active class
@@ -70,13 +72,30 @@ const sectionIsActive = function(){
     });
     // add active class for proper section
     activeSection.classList.add('your-active-class');
+    return activeSection
 }
+
+// Add active class to list item when its relevant section is active
+const navListIsActive = function(){
+    let activeList = document.querySelector('li')
+    navLists.forEach(function(list) {
+
+        list.classList.remove('active-list')
+        if (list.textContent === activeSection.getAttribute('data-nav')){
+            activeList = list
+        }
+    })
+    activeList.classList.add('active-list');
+}
+
+
 
 // Scroll to anchor ID using scrollTO event
 const scrollToSection = function (event){
     const sectionClickedText = event.target.textContent;
     // scroll to clicked section by scrollIntoView function using data-nav identifier
-    document.querySelector('[data-nav='+'"'+sectionClickedText+'"'+']').scrollIntoView();
+    document.querySelector('[data-nav='+'"'+sectionClickedText+'"'+']').scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+    event.preventDefault()
 };
 
 /**
@@ -97,16 +116,10 @@ for (let list = 0; list < navLists.length; list++) {
 
 // Set sections as active
 document.addEventListener('scroll', sectionIsActive);
+document.addEventListener('scroll', navListIsActive)
 
-// Hide navigation bar when not scrolling
-window.addEventListener('scroll', function(){  
-    var navigationTag = document.querySelector('#navbar__list');
-    navigationTag.classList.remove('no-display-navbar')
-    setTimeout(function(){
-        navigationTag.classList.add('no-display-navbar')
-    }, 1250)
-})
-
-var sheet = document.createElement('style')
-sheet.innerHTML = ".no-display-navbar {display: none; transition:all 1s}";
+// Add styling css for active list item
+const sheet = document.createElement('style')
+sheet.innerHTML = ".active-list {  background: lightblue; color: green; transition: ease 0.3s all;}";
 document.body.appendChild(sheet);
+
